@@ -28,7 +28,12 @@ jobs:
         shell: bash
         run: |
           echo "ANDROID_HOME=${ANDROID_HOME}"
-          "$ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager" --install "platforms;android-35" "build-tools;35.0.0"
+          mkdir -p "$ANDROID_HOME/cmdline-tools"
+          curl -fLsS --retry 3 -o /tmp/android-commandline-tools.zip "https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip"
+          unzip -q /tmp/android-commandline-tools.zip -d /tmp/android-commandline-tools
+          mv /tmp/android-commandline-tools/cmdline-tools "$ANDROID_HOME/cmdline-tools/latest"
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle 8.11.1
         uses: gradle/actions/setup-gradle@v4
