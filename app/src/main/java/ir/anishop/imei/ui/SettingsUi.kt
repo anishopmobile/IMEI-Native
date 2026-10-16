@@ -99,7 +99,6 @@ import java.io.ByteArrayOutputStream
             }
         }) { Text("واردکردن سوابق") } },
         dismissButton = { TextButton(onClick = { legacyPreview = null; legacyPending = null }) { Text("لغو") } })
-    )
     if (preview != null && pending != null) AlertDialog(
         onDismissRequest = { pending = null; preview = null },
         title = { Text("تأیید بازیابی اطلاعات") },
